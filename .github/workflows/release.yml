@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+  packages: write
+
 jobs:
   create-release:
     runs-on: ubuntu-latest
@@ -18,7 +22,6 @@ jobs:
         id: version
         run: |
           if [ -f "app/build.gradle" ] || [ -f "app/build.gradle.kts" ]; then
-            # Try to extract versionName from build.gradle
             VERSION=$(grep -oP 'versionName\s*=\s*"\K[^"]+' app/build.gradle* || echo "1.0.0")
             echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
           else
@@ -45,22 +48,9 @@ jobs:
           echo "DRAFT=$DRAFT" >> $GITHUB_OUTPUT
           echo "PRERELEASE=$PRERELEASE" >> $GITHUB_OUTPUT
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v${{ steps.version.outputs.VERSION }}-${{ github.run_number }}
-          release_name: ${{ steps.config.outputs.NAME }}
-          body: ${{ steps.config.outputs.DESCRIPTION }}
-          draft: ${{ steps.config.outputs.DRAFT }}
-          prerelease: ${{ steps.config.outputs.PRERELEASE }}
-
-      - name: Find and upload APK asset
+      - name: Find APK asset
         id: find_apk
         run: |
-          # Tìm APK trong thư mục releases
           APK_FILE=$(find ./releases -name "*.apk" -type f 2>/dev/null | head -1)
           if [ -n "$APK_FILE" ]; then
             echo "APK_PATH=$APK_FILE" >> $GITHUB_OUTPUT
@@ -70,13 +60,27 @@ jobs:
             echo "APK_PATH=" >> $GITHUB_OUTPUT
           fi
 
-      - name: Upload APK asset
+      - name: Create Release with APK
+        uses: softprops/action-gh-release@v1
         if: steps.find_apk.outputs.APK_PATH != ''
-        uses: actions/upload-release-asset@v1
+        with:
+          tag_name: v${{ steps.version.outputs.VERSION }}-${{ github.run_number }}
+          name: ${{ steps.config.outputs.NAME }}
+          body: ${{ steps.config.outputs.DESCRIPTION }}
+          draft: ${{ steps.config.outputs.DRAFT }}
+          prerelease: ${{ steps.config.outputs.PRERELEASE }}
+          files: ${{ steps.find_apk.outputs.APK_PATH }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create Release without APK
+        uses: softprops/action-gh-release@v1
+        if: steps.find_apk.outputs.APK_PATH == ''
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ steps.find_apk.outputs.APK_PATH }}
-          asset_name: sports-tv-v${{ steps.version.outputs.VERSION }}.apk
-          asset_content_type: application/vnd.android.package-archive
+          tag_name: v${{ steps.version.outputs.VERSION }}-${{ github.run_number }}
+          name: ${{ steps.config.outputs.NAME }}
+          body: ${{ steps.config.outputs.DESCRIPTION }}
+          draft: ${{ steps.config.outputs.DRAFT }}
+          prerelease: ${{ steps.config.outputs.PRERELEASE }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
