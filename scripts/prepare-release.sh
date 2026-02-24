@@ -28,6 +28,17 @@ else
   VERSION="1.0.0"
 fi
 
+# Cập nhật .release-config.json với version mới
+if [ -f ".release-config.json" ]; then
+  if command -v jq &> /dev/null; then
+    jq ".name = \"LuongSon TV Release v${VERSION}\"" ".release-config.json" > ".release-config.json.tmp"
+    mv ".release-config.json.tmp" ".release-config.json"
+    echo "Updated .release-config.json with version v${VERSION}"
+  else
+    echo "Warning: jq not installed, skipping .release-config.json update"
+  fi
+fi
+
 # Copy APK (fixed filename - không thay đổi)
 APK_DEST="$RELEASE_DIR/sports-tv.apk"
 cp "$APK_SOURCE" "$APK_DEST"

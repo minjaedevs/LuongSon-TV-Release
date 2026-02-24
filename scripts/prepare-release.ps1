@@ -49,6 +49,19 @@ if (Test-Path $buildGradlePath) {
     $VERSION_CODE = "1"
 }
 
+# Cập nhật .release-config.json với version mới
+$releaseConfigPath = ".release-config.json"
+if (Test-Path $releaseConfigPath) {
+    try {
+        $configJson = Get-Content $releaseConfigPath -Raw | ConvertFrom-Json
+        $configJson.name = "LuongSon TV Release v${VERSION}"
+        $configJson | ConvertTo-Json | Set-Content $releaseConfigPath -Encoding UTF8
+        Write-Host "Updated .release-config.json with version v${VERSION}" -ForegroundColor Green
+    } catch {
+        Write-Host "Warning: Could not update .release-config.json: $_" -ForegroundColor Yellow
+    }
+}
+
 # Copy APK (fixed filename - không thay đổi)
 $APK_DEST = "$RELEASE_DIR/sports-tv.apk"
 Copy-Item -Path $APK_SOURCE -Destination $APK_DEST -Force
