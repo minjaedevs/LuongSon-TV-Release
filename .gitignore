@@ -1,8 +1,11 @@
-# Build outputs (APK files will be tracked via releases, not git)
+# Build outputs
 build/
 .gradle/
+
+# Ignore APK files except in releases folder
 *.apk
 *.aab
+!releases/*.apk
 
 # Android Studio
 .idea/
