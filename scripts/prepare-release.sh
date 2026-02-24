@@ -28,8 +28,8 @@ else
   VERSION="1.0.0"
 fi
 
-# Copy APK
-APK_DEST="$RELEASE_DIR/sports-tv-v${VERSION}.apk"
+# Copy APK (fixed filename - không thay đổi)
+APK_DEST="$RELEASE_DIR/sports-tv.apk"
 cp "$APK_SOURCE" "$APK_DEST"
 echo "APK copied: $APK_DEST"
 

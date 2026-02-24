@@ -49,8 +49,8 @@ if (Test-Path $buildGradlePath) {
     $VERSION_CODE = "1"
 }
 
-# Copy APK
-$APK_DEST = "$RELEASE_DIR/sports-tv-v${VERSION}.apk"
+# Copy APK (fixed filename - không thay đổi)
+$APK_DEST = "$RELEASE_DIR/sports-tv.apk"
 Copy-Item -Path $APK_SOURCE -Destination $APK_DEST -Force
 Write-Host "APK copied: $APK_DEST" -ForegroundColor Green
 
@@ -70,7 +70,7 @@ Write-Host "APK staged for commit" -ForegroundColor Green
 
 # Commit message
 if (-not $Message) {
-    $Message = "Release v${VERSION}"
+    $Message = "Release v${VERSION}+${VERSION_CODE} - $(Get-Date -Format "yyyy-MM-dd")"
 }
 
 Write-Host ""
@@ -83,4 +83,4 @@ Write-Host ""
 Write-Host "GitHub Actions will automatically:" -ForegroundColor Green
 Write-Host "   - Create release on GitHub"
 Write-Host "   - Upload APK as asset"
-Write-Host "   - Create tag v${VERSION}"
+Write-Host "   - Create tag v${VERSION}+${VERSION_CODE} "
