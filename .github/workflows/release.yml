@@ -64,12 +64,13 @@ jobs:
         uses: softprops/action-gh-release@v1
         if: steps.find_apk.outputs.APK_PATH != ''
         with:
-          tag_name: v${{ steps.version.outputs.VERSION }}-${{ github.run_number }}
+          tag_name: v${{ steps.version.outputs.VERSION }}
           name: ${{ steps.config.outputs.NAME }}
           body: ${{ steps.config.outputs.DESCRIPTION }}
           draft: ${{ steps.config.outputs.DRAFT }}
           prerelease: ${{ steps.config.outputs.PRERELEASE }}
           files: ${{ steps.find_apk.outputs.APK_PATH }}
+          make_latest: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -77,7 +78,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         if: steps.find_apk.outputs.APK_PATH == ''
         with:
-          tag_name: v${{ steps.version.outputs.VERSION }}-${{ github.run_number }}
+          tag_name: v${{ steps.version.outputs.VERSION }}
           name: ${{ steps.config.outputs.NAME }}
           body: ${{ steps.config.outputs.DESCRIPTION }}
           draft: ${{ steps.config.outputs.DRAFT }}
