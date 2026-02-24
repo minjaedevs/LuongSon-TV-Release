@@ -1,0 +1,8 @@
+{
+  "name": "Sports TV Release v1.0.0",
+  "description": "Release\n\nInstallation\n- Download APK file from Assets\n- Allow installation from unknown sources on device\n- Install APK file\n\nFeatures\n- Watch live sports events\n- High quality video\n- User-friendly interface\n\nBug Fixes\n- Improved application performance\n- Fixed video playback issues\n\nBuild Info\n- Version: 1.0.0\n- Size: ~11.9 MB",
+  "draft": false,
+  "prerelease": false,
+  "apk_enabled": true,
+  "apk_path": "app/build/outputs/apk/release/app-release.apk"
+}
