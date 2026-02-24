@@ -47,12 +47,34 @@ git push origin main
 ## Results
 
 GitHub Actions automatically:
-- Creates release on GitHub
+- Creates release on GitHub (tag: `v1.0.0`)
 - Uploads APK as asset
 - Creates release notes from `.release-config.json`
-- Creates tag `v1.0.0-{build_number}`
+- Marks as latest release (`make_latest: true`)
 
 **View release:** https://github.com/minjaedevs/LuongSon-TV-Release/releases
+
+---
+
+## Download Flow (for Android TV)
+
+User downloads via short URL with automatic redirects:
+
+```
+Bit.ly (lstv-9)
+  ↓ redirect
+https://minjaedevs.github.io/LuongSon-TV-Release/download.html
+  ↓ redirect (docs/download.html)
+https://github.com/minjaedevs/LuongSon-TV-Release/releases/latest/download/sports-tv-v1.0.0.apk
+  ↓ GitHub auto-redirect to latest
+APK tải xuống thành công
+```
+
+**Key Benefits:**
+- Short URL: `https://bit.ly/lstv-9` (dễ nhập trên Android TV)
+- Always points to latest: `/latest/` endpoint
+- Link không bao giờ thay đổi
+- Professional landing page: GitHub Pages (docs/)
 
 ---
 

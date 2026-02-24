@@ -50,8 +50,9 @@ git push origin main
 **Features:**
 - Auto upload APK (`app/build/outputs/apk/release/app-release.apk`)
 - Extract version from `build.gradle`
-- Create release with tag `v{version}-{build_number}`
+- Create release with fixed tag `v{version}` (never changes)
 - Upload APK as release asset
+- Mark as latest release (make_latest: true)
 
 **Cấu hình:** Chỉnh sửa `.release-config.json`
 
@@ -183,7 +184,7 @@ Workflow sẽ tự động lấy version từ `package.json`.
    - Create release on GitHub
    - Extract version from build.gradle
    - Upload APK as asset
-   - Create tag v{version}-{build_number}
+   - Create tag v{version} (fixed, never changes)
 ```
 
 **GitHub Actions Flow:**
@@ -192,8 +193,27 @@ On: push to main
 ├── Get version from build.gradle
 ├── Get config from .release-config.json
 ├── Create release on GitHub
-└── Upload APK as asset
+├── Upload APK as asset
+├── Set make_latest: true
+└── Tag: v{version} (cố định)
 ```
+
+**User Download Flow (Android TV):**
+```
+Bit.ly (lstv-9)
+  ↓ redirect
+https://minjaedevs.github.io/LuongSon-TV-Release/download.html
+  ↓ redirect (docs/download.html)
+https://github.com/.../releases/latest/download/sports-tv-v1.0.0.apk
+  ↓ GitHub auto-redirect to latest
+APK tải xuống thành công
+```
+
+**Key benefits of this flow:**
+- Bit.ly link không bao giờ thay đổi
+- Always points to latest version (`/latest/` endpoint)
+- Professional landing page (GitHub Pages)
+- Dễ nhập trên Android TV downloader
 
 ### Release Assets
 After push, GitHub Release will have:
