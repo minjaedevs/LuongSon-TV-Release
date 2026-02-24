@@ -96,4 +96,4 @@ Write-Host ""
 Write-Host "GitHub Actions will automatically:" -ForegroundColor Green
 Write-Host "   - Create release on GitHub"
 Write-Host "   - Upload APK as asset"
-Write-Host "   - Create tag v${VERSION}+${VERSION_CODE} "
+Write-Host "   - Create tag v$VERSION (Code: $VERSION_CODE)"
