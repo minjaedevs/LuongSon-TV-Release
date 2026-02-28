@@ -1,8 +1,8 @@
-{
-  "name": "LuongSon TV Release v1.0.0",
-  "description": "LuongSon TV Release. Download APK from Assets. Installation: Allow unknown sources on device. Features: Watch live sports, high quality video. Bug fixes: Improved performance.",
-  "draft": false,
-  "prerelease": false,
-  "apk_enabled": true,
-  "apk_path": "app/build/outputs/apk/release/app-release.apk"
+﻿{
+    "name":  "LuongSon TV Release v1.0.1",
+    "description":  "LuongSon Android TV Release v1.0.1. Download APK from Assets. Installation: Allow unknown sources on device. Features: Watch live sports, high quality video. Bug fixes: Improved performance.",
+    "draft":  false,
+    "prerelease":  false,
+    "apk_enabled":  true,
+    "apk_path":  "app/build/outputs/apk/release/app-release.apk"
 }
